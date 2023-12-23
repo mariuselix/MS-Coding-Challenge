@@ -1,5 +1,4 @@
-The data that you’ll need to for this problem.
-- operations.txt contains a list of actions that were performed by the vehicle.  In Operations.txt:
+The data that you’ll need to for this problem. Operations.txt contains a list of actions that were performed by the vehicle:
 - left 90 means the vehicle turned left by 90 degrees.
 - forward 100 means that the vehicle moved forward 100 meters.
 - picture PIA04191_orig.jpg means that it took a picture and recorded it in the file named PIA04191_orig.jpg.
