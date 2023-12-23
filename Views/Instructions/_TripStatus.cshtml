@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Trip info";
+    var distanceTraveled = ViewData["distanceTraveled"];
+    var distanceBetweenMarkers = ViewData["distanceBetweenMarkers"];
+}
+
+<div class="modal-header text-center">
+    <h4 class="modal-title text-center float-left" id="myModalLabel">Trip statistics</h4>
+    <button type="button" class="close float-right" data-dismiss="modal" aria-hidden="true">×</button>
+</div>
+<div class="row m-0 p-3">
+
+    <p class="">The car traveled <strong>@distanceTraveled</strong> meters on its trip between markers A and C!</p>
+    <p class="">The direct, straight line distance between markers A and C is <strong>@distanceBetweenMarkers</strong> meters.</p>
+</div>

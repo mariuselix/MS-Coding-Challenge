@@ -1,0 +1,137 @@
+﻿@model IEnumerable<MvcCosmos.Models.Instruction>
+
+@{
+    ViewData["Title"] = "CosmosDB App";
+}
+
+<h1 class="text-center">What now? Do something!</h1>
+<div class="d-flex flex-row justify-content-center">
+    <a asp-action="Create" class="btn btn-primary m-4">Create new instruction</a>
+    <a asp-action="Upload" class="btn btn-primary m-4">Upload to CosmosDB from file</a>
+    <a asp-action="Cleanup" class="btn btn-primary m-4">Cleanup CosmosDB collection</a>
+    @*<a asp-action="GetTravel" class="btn btn-primary m-4">See some trip stats</a>*@
+    <a href="javascript:void(0);" class="btn btn-primary m-4 tripStats">See some trip stats</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Step)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Step)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Value)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                    <a href="javascript:void(0);" class="anchorDetail" data-id="@item.Id">Modal details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div id='myModal' class='modal'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    @*<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>*@
+
+    <script>
+
+        let TripStatusURL = '/Instructions/GetTravel';
+        $(function () {
+            $(".tripStats").click(function () {
+                //debugger;
+                var $buttonClicked = $(this);
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: TripStatusURL,
+                    contentType: "text/html; charset=utf-8",
+                    datatype: "json",
+                    success: function (data) {
+                        //debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            //$("#closebtn").on('click',function(){
+            //    $('#myModal').modal('hide');
+
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+
+        var TeamDetailPostBackURL = '/Instructions/Details';
+        $(function () {
+            $(".anchorDetail").click(function () {
+                //debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: TeamDetailPostBackURL,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "Id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        //debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            //$("#closebtn").on('click',function(){
+            //    $('#myModal').modal('hide');
+
+            $("#closbtn").click(function () {
+                $('#myModal').modal('hide');
+            });
+        });
+
+    </script>
+
+}
